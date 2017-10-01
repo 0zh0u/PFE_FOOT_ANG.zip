@@ -1,0 +1,104 @@
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="sessionCreate-Pop">
+        <md-dialog>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>
+                        Création d'un entrainement
+                    </h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="sessionCreate.closeDialog()">
+                        <i class="fa fa-2x fa-close"></i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-dialog-content>
+                <md-content layout="row" layout-padding>
+                    <form name="sessionCreateForm" flex>
+                        <div layout="column">
+                            <md-input-container flex>
+                                <label>Date</label>
+                                <input mdc-datetime-picker name="start" date="true" type="text"
+                                       show-todays-date
+                                       short-time="false"
+                                       format="{{'DD/MM/YYYY à HH:mm'}}"
+                                       ng-model="sessionCreate.session.date"
+                                       required>
+
+                                <div ng-messages="sessionCreateForm.date.$error" md-auto-hide="false"
+                                     ng-show="sessionCreateForm.date.$touched">
+                                    <div ng-message="required">La date est obligatoire.</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex>
+                                <label>Ville</label>
+                                <input name="city" ng-model="sessionCreate.session.city" md-maxlength="30"
+                                       required/>
+                                <div ng-messages="sessionCreateForm.city.$error" md-auto-hide="false" ng-show="sessionCreateForm.city.$touched">
+                                    <div ng-message="required">La ville est obligatoire.</div>
+                                    <div ng-message="md-maxlength">La ville doit faire moins de 30 caractères.</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex>
+                                <label>Lieu</label>
+                                <input name="location" ng-model="sessionCreate.session.location" md-maxlength="50"
+                                       required/>
+                                <div ng-messages="sessionCreateForm.location.$error">
+                                    <div ng-message="required">Le lieu est obligatoire.</div>
+                                    <div ng-message="md-maxlength">Le lieu doit faire moins de 50 caractères.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container flex>
+                                <label>Durée</label>
+                                <input mdc-datetime-picker name="duration" date="false" time="true" type="text"
+                                       show-todays-date
+                                       short-time="false"
+                                       format="HH:mm"
+                                       placeholder="Durée"
+                                       ng-model="sessionCreate.session.duration"
+                                       required>
+
+                                <div ng-messages="sessionCreateForm.date.$error" md-auto-hide="false"
+                                     ng-show="sessionCreateForm.date.$touched">
+                                    <div ng-message="required">La durée est obligatoire.</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex>
+                                <label>Exercice</label>
+                                <md-select ng-model="sessionCreate.trainingToAdd">
+                                    <md-option ng-repeat="training in sessionCreate.team.Trainings" ng-click="sessionCreate.addTraining(training)">
+                                        {{training.name}} - {{training.difficulty}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </form>
+                    <div class="exercises-container" flex>
+                        <md-content flex layout="column">
+                            <md-list class="md-dense" flex>
+                                <md-subheader class="md-no-sticky">Exercices prévus</md-subheader>
+                                <div ng-repeat="training in sessionCreate.session.Trainings" class="form-group">
+                                    <span>
+                                        <md-button ng-click="sessionCreate.removeTraining(training)"
+                                                   class="md-raised md-icon-button md-warn">
+                                            <i class="fa fa-trash"></i>
+                                        </md-button>
+                                        <label>{{training.name}}</label>
+                                    </span>
+                                </div>
+                            </md-list>
+                        </md-content>
+                    </div>
+                </md-content>
+            </md-dialog-content>
+            <md-dialog-actions layout="row">
+                <span flex></span>
+                <md-button class="md-primary" ng-click="sessionCreate.createSession()">Créer</md-button>
+                <md-button ng-click="sessionCreate.closeDialog()">Fermer</md-button>
+            </md-dialog-actions>
+    </div>
+</div>

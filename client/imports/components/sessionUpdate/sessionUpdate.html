@@ -1,0 +1,108 @@
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="{{sessionUpdate.sessionUpd._id}}-Pop">
+        <md-dialog>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>
+                        Modifier un entrainement
+                    </h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="sessionUpdate.closeDialog()">
+                        <i class="fa fa-2x fa-close"></i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-dialog-content>
+                <md-content layout-gt-xs="row" layout="column" layout-padding>
+                    <form name="sessionUpdateForm" flex>
+                        <div layout="column">
+                            <md-input-container flex>
+                                <label>Date</label>
+                                <input mdc-datetime-picker name="date" date="true" type="text"
+                                       show-todays-date
+                                       short-time="false"
+                                       format="'DD/MM/YYYY à HH:mm'"
+                                       placeholder="Date"
+                                       ng-model="sessionUpdate.sessionUpd.date"
+                                       required>
+
+                                <div ng-messages="sessionUpdateForm.date.$error" md-auto-hide="false"
+                                     ng-show="sessionUpdateForm.date.$touched">
+                                    <div ng-message="required">La date est obligatoire.</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex>
+                                <label>Ville</label>
+                                <input name="city" ng-model="sessionUpdate.sessionUpd.city" md-maxlength="30"
+                                       required/>
+                                <div ng-messages="sessionUpdateForm.city.$error">
+                                    <div ng-message="required">Le prénom est obligatoire.</div>
+                                    <div ng-message="md-maxlength">Le prénom doit faire moins de 30 caractères.</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex>
+                                <label>Lieu</label>
+                                <input name="location" ng-model="sessionUpdate.sessionUpd.location" md-maxlength="50"
+                                       required/>
+                                <div ng-messages="sessionUpdateForm.location.$error">
+                                    <div ng-message="required">Le lieu est obligatoire.</div>
+                                    <div ng-message="md-maxlength">Le lieu doit faire moins de 50 caractères.</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex>
+                                <label>Durée</label>
+                                <input mdc-datetime-picker name="duration" date="false" time="true" type="text"
+                                       show-todays-date
+                                       short-time="false"
+                                       format="HH:mm"
+                                       placeholder="Durée"
+                                       ng-model="sessionUpdate.sessionUpd.duration"
+                                       required>
+
+                                <div ng-messages="sessionUpdateForm.date.$error" md-auto-hide="false"
+                                     ng-show="sessionUpdateForm.date.$touched">
+                                    <div ng-message="required">La durée est obligatoire.</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex>
+                                <label>Ajouter un exercice</label>
+                                <md-select ng-model="sessionUpdate.trainingToAdd">
+                                    <md-option ng-repeat="training in sessionUpdate.team.Trainings" ng-click="sessionUpdate.addTraining(training)">
+                                        {{training.name}} - {{training.difficulty}}
+                                    </md-option>
+                                </md-select>
+                            </md-input-container>
+                        </div>
+                    </form>
+                    <div class="exercises-container" flex>
+                        <md-content flex layout="column">
+                            <md-list class="md-dense" flex>
+                                <md-subheader class="md-no-sticky">Exercices prévus</md-subheader>
+                                <div ng-repeat="training in sessionUpdate.sessionUpd.Trainings" class="form-group">
+                                    <span>
+                                        <md-button ng-click="sessionUpdate.removeTraining(training)"
+                                                   class="md-raised md-icon-button md-warn">
+                                            <i class="fa fa-trash"></i>
+                                        </md-button>
+                                        <label>{{training.name}}</label>
+                                    </span>
+                                </div>
+                            </md-list>
+                        </md-content>
+                    </div>
+                </md-content>
+            </md-dialog-content>
+            <md-dialog-actions layout="row">
+                <md-button class="md-warn" ng-click="sessionUpdate.deleteSession()">Supprimer</md-button>
+                <span flex></span>
+                <md-button class="md-primary" ng-click="sessionUpdate.updateSession()">Enregistrer</md-button>
+                <md-button ng-click="sessionUpdate.closeDialog()">Fermer</md-button>
+            </md-dialog-actions>
+        </md-dialog>
+    </div>
+</div>

@@ -1,0 +1,105 @@
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="playerCreate-Pop">
+        <md-dialog>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>
+                        Création d'un joueur
+                    </h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="playerCreate.closeDialog()">
+                        <i class="fa fa-2x fa-close"></i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-dialog-content>
+                <md-content layout="row" layout-padding>
+                    <form name="playerCreateForm" flex>
+                        <div layout="column">
+                            <md-input-container flex>
+                                <label>Nom</label>
+                                <input name="lastname" ng-model="playerCreate.player.lastname" md-maxlength="30"
+                                       required/>
+                                <div ng-messages="playerCreateForm.lastname.$error" md-auto-hide="false" ng-show="playerCreateForm.lastname.$touched">
+                                    <div ng-message="required">Le nom est obligatoire.</div>
+                                    <div ng-message="md-maxlength">Le nom doit faire moins de 30 caractères.</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex>
+                                <label>Prénom</label>
+                                <input name="firstname" ng-model="playerCreate.player.firstname" md-maxlength="30"
+                                       required/>
+                                <div ng-messages="playerCreateForm.firstname.$error">
+                                    <div ng-message="required">Le prénom est obligatoire.</div>
+                                    <div ng-message="md-maxlength">Le prénom doit faire moins de 30 caractères.</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex>
+                                <label>Poste</label>
+                                <md-select name="post" ng-model="playerCreate.player.post"
+                                       required>
+                                    <md-option ng-value="'GK'">Gardien</md-option>
+                                    <md-option ng-value="'L_B'">Défenseur gauche</md-option>
+                                    <md-option ng-value="'R_B'">Défenseur droit</md-option>
+                                    <md-option ng-value="'L_M'">Milieu gauche</md-option>
+                                    <md-option ng-value="'R_M'">Milieu droit</md-option>
+                                    <md-option ng-value="'L_F'">Attaquant gauche</md-option>
+                                    <md-option ng-value="'R_F'">Attaquant droit</md-option>
+                                </md-select>
+                                <div ng-messages="playerCreateForm.post.$error">
+                                    <div ng-message="required">Le poste est obligatoire.</div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container flex>
+                                <label>Statistiques</label>
+                                <input name="statToAdd" ng-model="playerCreate.statToAdd" md-maxlength="30"/>
+                                <div ng-messages="playerCreateForm.statToAdd.$error">
+                                    <div ng-message="md-maxlength">La statistique doit faire moins de 30 caractères.
+                                    </div>
+                                </div>
+                                <md-button ng-click="playerCreate.addStat()" class="md-raised md-primary">
+                                    Ajouter la statistique
+                                </md-button>
+                            </md-input-container>
+                            <div ng-repeat="stat in playerCreate.player.Stats" class="form-group">
+                                <md-slider-container>
+                                    <span>
+                                        <md-button ng-click="playerCreate.removeStat(stat)"
+                                                   class="md-raised md-icon-button md-warn">
+                                            <i class="fa fa-trash"></i>
+                                        </md-button>
+                                        <label>{{stat.name}}</label>
+                                    </span>
+                                    <md-slider flex min="1" max="99" tickinterval="5" ng-model="stat.value"
+                                               aria-label="test"
+                                               id="stat-test-slider">
+                                    </md-slider>
+                                    <md-input-container>
+                                        <input flex type="number" ng-model="stat.value" aria-label="test"
+                                               aria-controls="stat-test-slider" min="1" max="99">
+                                    </md-input-container>
+                                </md-slider-container>
+                            </div>
+                        </div>
+                    </form>
+                    <div flex ng-switch on="playerCreate.player.Stats.length" class="chart-area">
+                        <div ng-switch-when="0">
+                            Ajoutez des statistiques au joueur pour générer son graphique.
+                        </div>
+
+                        <div ng-switch-default>
+                            <player-stat-chart player="playerCreate.player"></player-stat-chart>
+                        </div>
+                    </div>
+                </md-content>
+            </md-dialog-content>
+            <md-dialog-actions layout="row">
+                <span flex></span>
+                <md-button class="md-primary" ng-click="playerCreate.createPlayer()">Créer</md-button>
+                <md-button ng-click="playerCreate.closeDialog()">Fermer</md-button>
+            </md-dialog-actions>
+    </div>
+</div>

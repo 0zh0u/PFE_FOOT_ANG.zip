@@ -1,0 +1,25 @@
+<div flex layout="column">
+    <md-toolbar layout="row" class="md-toolbar-tools">
+        <md-button ng-click="menuOpened = !menuOpened" class="md-icon-button"><i class="fa fa-2x fa-bars"
+                                                                                 aria-hidden="true"></i>
+        </md-button>
+        <h1>Gestion de l'équipe - {{teamView.team.name}} - {{teamView.team.formationName}} </h1>
+    </md-toolbar>
+    {{teamView.team.formation.field}}
+    <div flex layout="row">
+        <navig layout="column" lock-open="lockOpen" current-team="teamView.team" menu-opened="menuOpened"></navig>
+        <md-content class="teamView" ng-init="currentFormation = angular.copy(teamView.team.formation)"layout-padding md-scroll-y>
+
+            <div flex layout="row" flex="100" class="soccerFields">
+                <div flex="20" layout="column" layout-align="center" ng-init="cIndex = $index" class="columnF" ng-repeat="line in teamView.team.formation">
+                    <!--<div class="post" flex ="20" ng-class=""  ng-init="pIndex = $index" ng-repeat="postP in line.column">-->
+                        <player-post post="postP"  flex ="20"  ng-init="pIndex = $index" ng-repeat="postP in line.column" column-index="cIndex" post-index="pIndex" total="teamView.totalPlayers" team="teamView.team" class="playerPost" ng-class="{ 'disabled' : postP.disabled || teamView.totalPlayers.length >=11 && postP.playerId == null}"></player-post>
+                    <!--</div>-->
+                </div>
+            </div>
+            <img src="img/soccerField.svg" class="soccer">
+        </md-content>
+
+    </div>
+</div>
+

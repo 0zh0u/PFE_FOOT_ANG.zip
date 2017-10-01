@@ -1,0 +1,106 @@
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="trainingCreate-Pop">
+        <md-dialog>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>
+                        Création d'un exercice
+                    </h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="trainingCreate.closeDialog()">
+                        <i class="fa fa-2x fa-close"></i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-dialog-content>
+                <md-content layout="row" layout-padding>
+                    <form name="trainingCreateForm" flex>
+                        <div layout="column">
+                            <md-input-container flex>
+                                <label>Nom</label>
+                                <input name="name" ng-model="trainingCreate.training.name" md-maxlength="30" required/>
+                                <div ng-messages="trainingCreateForm.name.$error" md-auto-hide="false"
+                                     ng-show="trainingCreateForm.name.$touched">
+                                    <div ng-message="required">Le nom est obligatoire.</div>
+                                    <div ng-message="md-maxlength">Le nom doit faire moins de 30 caractères.</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex>
+                                <label>Type</label>
+                                <input name="type" ng-model="trainingCreate.training.type" md-maxlength="30"
+                                       required/>
+                                <div ng-messages="trainingCreateForm.type.$error" md-auto-hide="false" ng-show="trainingCreateForm.type.$touched">
+                                    <div ng-message="required">Le type est obligatoire.</div>
+                                    <div ng-message="md-maxlength">Le type doit faire moins de 30 caractères.</div>
+                                </div>
+                            </md-input-container>
+
+                            <md-input-container flex>
+                                <label>Difficulté</label>
+                                <md-select name="difficulty" ng-model="trainingCreate.training.difficulty" required>
+                                    <md-option value="Facile">Facile</md-option>
+                                    <md-option value="Moyenne">Moyenne</md-option>
+                                    <md-option value="Difficile">Difficile</md-option>
+                                </md-select>
+                                <div ng-messages="trainingCreateForm.location.$error">
+                                    <div ng-message="required">La difficulté est obligatoire.</div>
+                                </div>
+                            </md-input-container>
+                            <div layout-gt-sm="row">
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Nom exercice</label>
+                                    <input name="ex_name" ng-model="trainingCreate.exerciseToAdd.name" md-maxlength="30" required>
+                                    <div ng-messages="trainingCreateForm.exerciseToAdd.name.$error" md-auto-hide="false" ng-show="trainingCreateForm.exerciseToAdd.name.$touched">
+                                        <div ng-message="required">Le nom est obligatoire.</div>
+                                        <div ng-message="md-maxlength">Le nom doit faire moins de 30 caractères.</div>
+                                    </div>
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Séries</label>
+                                    <input type="number" name="ex_series" ng-model="trainingCreate.exerciseToAdd.nb_series" min="1" required>
+                                    <div ng-messages="trainingCreateForm.exerciseToAdd.nb_series.$error" md-auto-hide="false" ng-show="trainingCreateForm.exerciseToAdd.nb_series.$touched">
+                                        <div ng-message="required">Le nombre de série est obligatoire.</div>
+                                        <div ng-message="min">Le minimum est 1.</div>
+                                    </div>
+                                </md-input-container>
+
+                                <md-input-container class="md-block" flex-gt-sm>
+                                    <label>Répétitions</label>
+                                    <input type="number" name="ex_repetition" ng-model="trainingCreate.exerciseToAdd.repetition" min="1" required>
+                                    <div ng-messages="trainingCreateForm.exerciseToAdd.repetition.$error" md-auto-hide="false" ng-show="trainingCreateForm.exerciseToAdd.repetition.$touched">
+                                        <div ng-message="required">Le nombre de répétition est obligatoire.</div>
+                                        <div ng-message="min">Le minimum est 1.</div>
+                                    </div>
+                                </md-input-container>
+                            </div>
+                            <md-button ng-click="trainingCreate.addExercise()" class="md-raised md-primary">
+                                Ajouter l'exercice
+                            </md-button>
+                        </div>
+                    </form>
+                    <div class="exercises-container" flex>
+                        <md-content flex layout="column">
+                            <md-list class="md-dense" flex>
+                                <md-subheader class="md-no-sticky">Exercices</md-subheader>
+                                <md-list-item class="md-3-line" ng-repeat="exercise in trainingCreate.training.Exercises">
+                                    <div class="md-list-item-text" layout="column">
+                                        <h3>{{exercise.name}}</h3>
+                                        <h4>{{exercise.nb_series}} série{{exercise.nb_series > 1 ? 's' : ''}}</h4>
+                                        <h4>{{exercise.repetition}} répétition{{exercise.repetition > 1 ? 's' : ''}}</h4>
+                                    </div>
+                                </md-list-item>
+                            </md-list>
+                        </md-content>
+                    </div>
+                </md-content>
+            </md-dialog-content>
+            <md-dialog-actions layout="row">
+                <span flex></span>
+                <md-button class="md-primary" ng-click="trainingCreate.createTraining()">Créer</md-button>
+                <md-button ng-click="trainingCreate.closeDialog()">Fermer</md-button>
+            </md-dialog-actions>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="{{playerView.player._id}}-Pop">
+        <md-dialog>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>
+                        Fiche de joueur
+                    </h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="playerView.closeDialog()">
+                        <i class="fa fa-2x fa-close"></i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-dialog-content>
+                <md-content layout="row" layout-padding>
+                    <ul>
+                        <li>Nom : {{playerView.player.lastname}}</li>
+                        <li>Prenom : {{playerView.player.firstname}}</li>
+                        <li class="player-{{playerView.player.condition_type}}">Condition :
+                            {{playerView.player.condition_type}}
+                        </li>
+
+                        <li>Actif : {{!playerView.player.condition_type}}</li>
+                        <li>Test : {{playerView.player._id}}</li>
+                    </ul>
+                    <player-stat-chart player="playerView.player"></player-stat-chart>
+                </md-content>
+            </md-dialog-content>
+            <md-dialog-actions layout="row">
+                <span flex></span>
+                <md-button ng-click="playerView.closeDialog()">Fermer</md-button>
+            </md-dialog-actions>
+    </div>
+</div>

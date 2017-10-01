@@ -1,0 +1,24 @@
+<div flex layout="column">
+    <md-toolbar layout="row" class="md-toolbar-tools">
+        <md-button ng-hide="dashboard.$mdMedia('gt-md')" ng-click="menuOpened = !menuOpened" class="md-icon-button"><i class="fa fa-2x fa-bars"
+                                                                                 aria-hidden="true"></i>
+        </md-button>
+        <h1>Evénements à venir - {{dashboard.team.name}}</h1>
+        <span flex></span>
+        <md-button ng-click="dashboard.showDialog($event, 'eventCreate')">
+            <i class="fa fa-plus"></i>
+            Créer un événement
+        </md-button>
+    </md-toolbar>
+
+    <div flex layout="row">
+        <navig layout="column" lock-open="lockOpen" current-team="dashboard.team" menu-opened="menuOpened"></navig>
+
+        <md-content flex layout="column" layout-padding md-scroll-y>
+            <event-create team="dashboard.team"></event-create>
+
+
+            <div id="calendar"></div>
+        </md-content>
+    </div>
+</div>

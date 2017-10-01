@@ -1,0 +1,72 @@
+<md-sidenav flex md-is-locked-open="$mdMedia('gt-md')" md-is-open="navig.menuOpened" class="md-whiteframe-4dp">
+    <md-content>
+        <md-list>
+            <md-list-item>
+                <md-menu>
+                    <md-button aria-label="Menu de choix d'équipe" ng-click="$mdMenu.open($event)">
+                        <i class="fa fa-list"></i>{{navig.currentTeam.name}}
+                    </md-button>
+                    <md-menu-content width="4">
+                        <md-menu-item ng-repeat="team in navig.teams">
+                            <md-button ui-sref="dashboard({teamId: team._id})"
+                                       ng-disabled="team._id == navig.currentTeam._id">
+                                {{team.name}}
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </md-list-item>
+            <any ng-if="navig.currentTeam">
+                <md-list-item ng-if="navig.currentTeam.followedEvent">
+                    <md-button class="md-warn" ui-sref="eventFollow({teamId: navig.currentTeam._id, eventId: navig.currentTeam.followedEvent})" ui-sref-active="md-raised">
+                        <i class="fa fa-clock-o" aria-hidden="true"></i>
+                        Evenement en cours
+                    </md-button>
+                </md-list-item>
+
+                <md-list-item>
+                    <md-button ui-sref="dashboard({teamId: navig.currentTeam._id})" ui-sref-active="md-raised md-primary">
+                        <i class="fa fa-tachometer" aria-hidden="true"></i>
+                        Tableau de bord
+                    </md-button>
+                </md-list-item>
+
+                <md-list-item>
+                    <md-button ui-sref="teamView({teamId: navig.currentTeam._id})" ui-sref-active="md-raised md-primary">
+                        <i class="fa fa-flag" aria-hidden="true"></i>
+                        Gestion de l'équipe
+                    </md-button>
+                </md-list-item>
+
+                <md-list-item>
+                    <md-button ui-sref="sessions({teamId: navig.currentTeam._id})" ui-sref-active="md-raised md-primary">
+                        <i class="fa fa-check-square" aria-hidden="true"></i>
+                        Gestion des entraînements
+                    </md-button>
+                </md-list-item>
+
+                <md-list-item>
+                    <md-button ui-sref="trainings({teamId: navig.currentTeam._id})" ui-sref-active="md-raised md-primary">
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                        Gestion des exercices
+                    </md-button>
+                </md-list-item>
+
+                <md-list-item>
+                    <md-button ui-sref="players({teamId: navig.currentTeam._id})" ui-sref-active="md-raised md-primary">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        Gestion des joueurs
+                    </md-button>
+                </md-list-item>
+
+                <md-list-item>
+                    <md-button ui-sref="stats({teamId: navig.currentTeam._id})" ui-sref-active="md-raised md-primary">
+                        <i class="fa fa-bar-chart" aria-hidden="true"></i>
+                        Statistiques
+                    </md-button>
+                </md-list-item>
+            </any>
+
+        </md-list>
+    </md-content>
+</md-sidenav>

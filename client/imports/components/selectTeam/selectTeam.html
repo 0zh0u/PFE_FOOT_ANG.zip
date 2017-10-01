@@ -1,0 +1,21 @@
+<md-toolbar layout="row" class="md-toolbar-tools">
+    <h1>Vos équipes</h1>
+    <span flex></span>
+    <md-button ui-sref="createTeam()">
+        <i class="fa fa-plus"></i>
+        Créer une équipe
+    </md-button>
+</md-toolbar>
+
+<md-content flex layout="row" layout-padding layout-wrap>
+    <md-card flex="33" ng-repeat="team in selectTeam.teams">
+        <md-card-content>
+            <h2>{{team.name}}</h2>
+        </md-card-content>
+        <md-card-actions layout="row" layout-align="end center">
+            <md-button ui-sref="dashboard({ teamId: team._id})">Voir les événements à venir
+                ({{team.Events.length}})
+            </md-button>
+        </md-card-actions>
+    </md-card>
+</md-content>

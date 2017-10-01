@@ -1,0 +1,112 @@
+<div flex layout="column">
+    <md-toolbar layout="row" class="md-toolbar-tools">
+        <md-button ng-hide="eventFollow.$mdMedia('gt-md')" ng-click="menuOpened = !menuOpened" class="md-icon-button"><i class="fa fa-2x fa-bars"
+                                                                                 aria-hidden="true"></i>
+        </md-button>
+        <h1>Evénements en direct - {{eventFollow.team.name}}</h1>
+    </md-toolbar>
+
+    <div flex layout="row">
+        <navig layout="column" lock-open="lockOpen" current-team="eventFollow.team" menu-opened="menuOpened"></navig>
+
+        <md-content flex layout="column" layout-padding md-scroll-y>
+            <div ng-if="!eventFollow.event.matchEvents.length" layout="row">
+                <md-button class="md-raised md-warn" ng-click="eventFollow.unfollow()">Arrêter de suivre ce match</md-button>
+                <md-button class="md-raised md-primary" ng-click="eventFollow.startMatch()">Début du match</md-button>
+            </div>
+
+            <div layout="row">
+                <div layout="column">
+                    <p>Possession du ballon : </p>
+
+                    <md-radio-group ng-model="eventFollow.ballPossession">
+
+                        <md-radio-button value="Nous" class="md-primary">Nous</md-radio-button>
+                        <md-radio-button value="Adversaires" class="md-warn">Adversaire</md-radio-button>
+
+                    </md-radio-group>
+                </div>
+
+                <div layout="column">
+
+                    <timer autostart="false" max-time-unit="'minute'" interval="1000" style="position: relative; text-align: center; top: 50%;">{{mminutes}}:{{sseconds}}</timer>
+                    <canvas class="chart chart-doughnut"
+                            chart-data="eventFollow.event.possessionData" chart-labels="eventFollow.possessionLabels" chart-colors="eventFollow.possessionColors">
+                    </canvas>
+                </div>
+
+                <div layout="column" style="font-size: 60px; line-height: 170px;">
+                    Score : {{ eventFollow.team._id }} {{ eventFollow.event.ownScore }} - {{ eventFollow.event.oppScore }} {{ eventFollow.event.opponent }}
+                </div>
+            </div>
+
+            <div ng-if="eventFollow.event.matchEvents.length && !eventFollow.event.end" style="">
+                <div layout="row">
+                    <md-button ng-if="!eventFollow.event.hadHalfTime" class="md-raised md-primary" ng-click="eventFollow.halfTime()">Déclarer la mi-temps</md-button>
+                    <md-button ng-if="eventFollow.event.hadHalfTime && !eventFollow.event.completedHalfTime" class="md-raised md-primary" ng-click="eventFollow.resumeMatch()">Reprise  du match</md-button>
+                    <md-button ng-if="eventFollow.event.completedHalfTime && !eventFollow.event.end" class="md-raised md-warn" ng-click="eventFollow.endMatch()">Déclarer la fin du match</md-button>
+                </div>
+
+                <form name="newEventForm" ng-if="!eventFollow.event.hadHalfTime || eventFollow.event.completedHalfTime">
+                    <div layout="row">
+                        <md-input-container flex ng-repeat="cat in eventFollow.eventTypes | limitTo:-eventFollow.eventTypes.length + 1">
+                            <label>Evenement sur {{ cat.title }}</label>
+                            <md-select ng-model="eventFollow.newEvent.type" ng-model-options="{trackBy: '$value.id'}">
+                                <md-option ng-value="type" ng-repeat="type in cat.types">{{ type.title }}</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="row">
+                        <md-input-container ng-if="eventFollow.newEvent.type.hasAttachedPlayer">
+                            <label>Joueur associé à l'événement</label>
+                            <md-select ng-model="eventFollow.newEvent.attachedPlayer">
+                                <md-option ng-disabled="eventFollow.parsePlayer(player) == eventFollow.newEvent.attachedPlayer2" ng-value="eventFollow.parsePlayer(player)" ng-repeat="player in eventFollow.findEventPlayers()">{{ player.firstname +' '+ player.lastname }}</md-option>
+                            </md-select>
+                        </md-input-container>
+
+                        <md-input-container ng-if="eventFollow.newEvent.type.hasAttachedPlayer2">
+                            <label>Joueur sortant</label>
+                            <md-select ng-model="eventFollow.newEvent.attachedPlayer2">
+                                <md-option ng-disabled="eventFollow.parsePlayer(player) == eventFollow.newEvent.attachedPlayer" ng-value="eventFollow.parsePlayer(player)" ng-repeat="player in eventFollow.findEventPlayers()">{{ player.firstname +' '+ player.lastname }}</md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="row">
+                        <md-input-container class="md-block" flex>
+                            <label>Commentaire</label>
+                            <textarea ng-model="eventFollow.newEvent.comment"></textarea>
+                        </md-input-container>
+                    </div>
+
+                    <div layout="row">
+                        <md-button class="md-raised md-primary" ng-disabled="eventFollow.isAddDisabled()" ng-click="eventFollow.addEvent(eventFollow.newEvent)"><i class="fa fa-plus"></i> Ajouter l'événement</md-button>
+                    </div>
+                </form>
+            </div>
+
+            <timeline md-scroll-y flex>
+                <timeline-event ng-repeat="matchEvent in eventFollow.event.matchEvents" side="{{matchEvent.side}}">
+                    <timeline-badge class="{{matchEvent.badgeClass}}">
+                        <i class="fa {{matchEvent.badgeIconClass}}"></i>
+                    </timeline-badge>
+                    <timeline-panel class="{{matchEvent.badgeClass}}">
+                        <timeline-heading>
+                            <h4>
+                                {{matchEvent.title}} - {{matchEvent.timer | hourSecond}}
+                                <md-button ng-if="!eventFollow.event.end && !matchEvent.automatic" class="md-icon-button pull-right" ng-click="eventFollow.removeEvent($index)">
+                                    <i class="fa fa-trash"></i>
+                                </md-button>
+
+                                <small ng-if="matchEvent.attachedPlayer"> - {{ matchEvent.attachedPlayer + (matchEvent.attachedPlayer2 ? ' (rentre) = ' + matchEvent.attachedPlayer2 +' (sort)' : '') }}</small>
+                            </h4>
+                        </timeline-heading>
+
+                        <p ng-if="matchEvent.comment">{{matchEvent.comment}}</p>
+                    </timeline-panel>
+                </timeline-event>
+            </timeline>
+        </md-content>
+    </div>
+</div>

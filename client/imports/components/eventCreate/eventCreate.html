@@ -1,0 +1,165 @@
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="eventCreate-Pop">
+        <md-dialog>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>
+                        Création d'un événement
+                    </h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="eventCreate.closeDialog()">
+                        <i class="fa fa-2x fa-close"></i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-dialog-content>
+                <md-content layout="row" layout-padding>
+                    <form name="eventCreateForm" flex>
+                        <md-tabs style="min-width: 600px" md-dynamic-height md-border-bottom>
+                            <md-tab label="Informations basiques">
+                                <div flex layout="column">
+                                    <div layout="row">
+                                        <md-input-container flex>
+                                            <label>Date de début</label>
+                                            <input mdc-datetime-picker name="start" date="true" time="eventCreate.event.type != 'period'" type="text"
+                                                   show-todays-date
+                                                   short-time="false"
+                                                   format="{{eventCreate.event.type != 'period' ? 'DD/MM/YYYY à HH:mm' : 'DD/MM/YYYY'}}"
+                                                   ng-model="eventCreate.event.start"
+                                                   required>
+
+                                            <div ng-messages="eventCreateForm.start.$error" md-auto-hide="false"
+                                                 ng-show="eventCreateForm.start.$touched">
+                                                <div ng-message="required">La date de début est obligatoire.</div>
+                                            </div>
+                                        </md-input-container>
+
+                                        <md-input-container flex ng-if="eventCreate.event.type == 'period'">
+                                            <label>Date de fin</label>
+                                            <input mdc-datetime-picker name="end" date="true" time="false" type="text"
+                                                   show-todays-date
+                                                   short-time="false"
+                                                   format="DD/MM/YYYY"
+                                                   ng-model="eventCreate.event.end"
+                                                   required>
+
+                                            <div ng-messages="eventCreateForm.end.$error" md-auto-hide="false"
+                                                 ng-show="eventCreateForm.end.$touched">
+                                                <div ng-message="required">La date de fin est obligatoire.</div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+
+                                    <md-input-container flex ng-if="eventCreate.event.type == 'period'">
+                                        <label class="md-no-float">Couleur (test : {{ eventCreate.event.color }})</label>
+
+                                        <ngjs-color-picker selected-color="eventCreate.event.color" options="{roundCorners: true}" custom-colors="eventCreate.periodColors"></ngjs-color-picker>
+                                    </md-input-container>
+
+
+                                    <md-input-container flex>
+                                        <label>Titre</label>
+                                        <input name="title" ng-model="eventCreate.event.title" md-maxlength="100"
+                                               required/>
+                                        <div ng-messages="eventCreateForm.title.$error" md-auto-hide="false"
+                                             ng-show="eventCreateForm.title.$touched">
+                                            <div ng-message="required">Le titre est obligatoire.</div>
+                                            <div ng-message="md-maxlength">Le titre doit faire moins de 100
+                                                caractères.
+                                            </div>
+                                        </div>
+                                    </md-input-container>
+
+                                    <md-input-container flex layout="column">
+                                        <label class="md-no-float">Type</label>
+
+                                        <md-radio-group ng-model="eventCreate.event.type" layout="row">
+
+                                            <md-radio-button ng-value="type.id" ng-repeat="type in eventCreate.types">{{ type.name }}</md-radio-button>
+
+                                        </md-radio-group>
+
+                                        <div ng-messages="eventCreateForm.type.$error" md-auto-hide="false"
+                                             ng-show="eventCreateForm.type.$touched">
+                                            <div ng-message="required">Le type est obligatoire.</div>
+                                        </div>
+                                    </md-input-container>
+                                </div>
+                            </md-tab>
+
+                            <md-tab label="Informations avancées" ng-if="eventCreate.event.type != 'period'">
+                                <md-input-container flex>
+                                    <label>Ville</label>
+                                    <input name="city" ng-model="eventCreate.event.city" md-maxlength="30"
+                                           required/>
+                                    <div ng-messages="eventCreateForm.city.$error" md-auto-hide="false"
+                                         ng-show="eventCreateForm.city.$touched">
+                                        <div ng-message="required">La ville est obligatoire.</div>
+                                        <div ng-message="md-maxlength">La ville doit faire moins de 30 caractères.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+
+                                <md-input-container flex>
+                                    <label>Lieu</label>
+                                    <input name="location" ng-model="eventCreate.event.location" md-maxlength="50"
+                                           required/>
+                                    <div ng-messages="eventCreateForm.location.$error">
+                                        <div ng-message="required">Le lieu est obligatoire.</div>
+                                        <div ng-message="md-maxlength">Le lieu doit faire moins de 50 caractères.
+                                        </div>
+                                    </div>
+                                </md-input-container>
+
+                                <div ng-switch="eventCreate.event.type">
+                                    <div ng-switch-when="match">
+                                        <md-input-container flex>
+                                            <label>Adversaire</label>
+                                            <input name="opponent" ng-model="eventCreate.event.opponent"
+                                                   md-maxlength="50"
+                                                   required/>
+                                            <div ng-messages="eventCreateForm.opponent.$error">
+                                                <div ng-message="required">L'adversaire est obligatoire.</div>
+                                                <div ng-message="md-maxlength">L'adversaire doit faire moins de 50
+                                                    caractères.
+                                                </div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                    <div ng-switch-when="training">
+                                        <md-input-container flex>
+                                            <label>Entraînement</label>
+                                            <md-select name="training" ng-model="eventCreate.event.training" ng-model-options="{trackBy: $value._id}"
+                                                       required>
+                                                <md-option ng-value="training"
+                                                           ng-repeat="training in eventCreate.team.Trainings">{{
+                                                    training.name }}
+                                                </md-option>
+                                            </md-select>
+                                            <div ng-messages="eventCreateForm.training.$error" md-auto-hide="false"
+                                                 ng-show="eventCreateForm.training.$touched">
+                                                <div ng-message="required">L'entraînement est obligatoire.</div>
+                                            </div>
+                                        </md-input-container>
+                                    </div>
+                                </div>
+                            </md-tab>
+
+                            <md-tab label="Joueurs invités ({{ eventCreate.event.invitedPlayers.length }} / {{eventCreate.team.Players.length}})">
+                                <div layout="column">
+                                    <select-players ng-model="eventCreate.event.invitedPlayers" team="eventCreate.team"></select-players>
+                                </div>
+                            </md-tab>
+                        </md-tabs>
+                    </form>
+                </md-content>
+            </md-dialog-content>
+
+            <md-dialog-actions layout="row">
+                <span flex></span>
+                <md-button class="md-primary" ng-click="eventCreate.createEvent()">Créer</md-button>
+                <md-button ng-click="eventCreate.closeDialog()">Fermer</md-button>
+            </md-dialog-actions>
+    </div>
+</div>

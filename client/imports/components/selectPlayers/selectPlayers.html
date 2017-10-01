@@ -1,0 +1,13 @@
+<div flex layout="column">
+    <md-checkbox ng-checked="isAllInvited()"
+                 md-indeterminate="isOneButNotAllInvited()"
+                 ng-click="inviteAll()">
+        Sélectionner tous les joueurs
+    </md-checkbox>
+
+    <md-checkbox ng-repeat="player in $ctrl.team.Players"
+                 ng-checked="isInvited(player)"
+                 ng-click="invite(player)">
+        <player-row player="player"></player-row>
+    </md-checkbox>
+</div>

@@ -1,0 +1,54 @@
+<div style="visibility: hidden">
+    <div class="md-dialog-container" id="{{sessionPlay.event._id}}-Play">
+        <md-dialog>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <h2>
+                        Entrainement en cours : <timer auto-start="false" interval="1000">{{hhours}}:{{mminutes}}:{{sseconds}}</timer>
+                    </h2>
+                    <span flex></span>
+                </div>
+            </md-toolbar>
+
+
+
+            <md-dialog-content>
+                <md-content layout="column" layout-padding>
+                    <md-tabs style="min-width: 300px" md-dynamic-height md-border-bottom md-swipe-content md-selected="sessionPlay.tabIndex">
+                        <md-tab ng-repeat="training in sessionPlay.session.Trainings" ng-disabled="sessionPlay.index < $index" label="Exercice n°{{$index + 1}}">
+                            <div class="exercises-tab tab{{$index%4}}" style="padding: 20px;" flex>
+                                {{training.name}}
+                                <i class="fa fa-check" ng-if="sessionPlay.index > $index" aria-hidden="true"></i>
+                                <md-list class="md-dense" flex>
+                                    <md-list-item class="md-3-line" ng-repeat="exercise in training.Exercises">
+                                        <div class="md-list-item-text" layout="column">
+                                            <h3>{{exercise.name}}</h3>
+                                            <h4>{{exercise.nb_series}} série{{exercise.nb_series > 1 ? 's' : ''}}</h4>
+                                            <h4>{{exercise.repetition}} répétition{{exercise.repetition > 1 ? 's' : ''}}</h4>
+                                        </div>
+                                    </md-list-item>
+                                </md-list>
+                            </div>
+                            <div style="text-align: center;" flex>
+                                <h2>{{training.time | date:'HH:mm:ss':'UTC'}}</h2>
+                                <div layout="row" layout-sm="column" layout-align="space-around">
+                                    <md-progress-circular ng-if="training === sessionPlay.session.Trainings[sessionPlay.index] && operation==='running'" class="md-hue-2" md-diameter="30px"></md-progress-circular>
+                                </div>
+                            </div>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+            </md-dialog-content>
+            <md-dialog-actions layout="row" ng-if="sessionPlay.session.status!=='Terminé'">
+                <md-button class="md-warn" ng-click="startOrStop()" >
+                    {{operation==="initial" ? "Commencer" : operation==="running" ? "Terminer" : operation==="stoppedAndNext" ? "Suivant" : operation==="stopped" ? "Reprendre" : "Terminer l'entrainement"}}
+                </md-button>
+                <span flex></span>
+                <md-button ng-click="cancel()">Annuler</md-button>
+            </md-dialog-actions>
+            <md-dialog-actions layout="row" ng-if="sessionPlay.session.status==='Terminé'">
+                <md-button ng-click="reset()">Réinitialiser</md-button>
+                <md-button ng-click="sessionPlay.closeDialog()">Fermer</md-button>
+            </md-dialog-actions>
+    </div>
+</div>

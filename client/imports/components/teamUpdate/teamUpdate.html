@@ -1,0 +1,20 @@
+<navig currentteam="teamUpdate.team"></navig>
+
+<div class="container-fluid">
+    <div class="container">
+
+        <div class="page-header noPad">
+            <div class="form-name">
+                <input ng-Model="teamUpdate.team.name" type="text" placeholder="Nom" class="form-control" id="name">
+            </div>
+        </div>
+        <div class="form-group">
+        </div>
+        <div class="form-group">
+        </div>
+
+        <a ng-href="/{{teamUpdate.team._id}}/dashboard" ng-click="teamUpdate.updateTeam(teamUpdate.team)" type="submit"
+           class="btn btn-default">Modifier0</a>
+
+    </div>
+</div>

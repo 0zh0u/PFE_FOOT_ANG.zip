@@ -1,0 +1,342 @@
+html {
+  height: 100%;
+}
+
+ul {
+  list-style: none;margin:0;padding:0;
+}
+
+.disabled{
+  display:none;
+}
+
+.md-fab i {
+  font-size: 24px;
+  line-height: 56px;
+}
+
+.playerChart {
+  width: 250px;
+  height: 240px;
+
+  canvas {
+    position: fixed;
+
+    border-left: 1px solid #ddd;
+    padding-left: 8px;
+  }
+}
+
+.flex{
+  flex:1;
+}
+.flexx{
+  flex:2;
+}
+.flexxx{
+  flex:3;
+}
+.flexxxx{
+  flex:4;
+}
+.flexxxxx{
+  flex:5;
+}
+.flex-container{
+  display : flex;
+  align-items:baseline;
+  &.flex-container-center{
+    display : flex;
+    align-items:center;
+  }
+
+}
+
+
+.flex-container-col{
+  display:flex;
+  flex-direction: column;
+}
+.flex-item{
+
+}
+
+body {
+
+  .fa-thumbs-up {
+    color: #09ab09;
+    font-size: 1.5em;
+  }
+  .fa-medkit {
+    color: #dc0600;
+    font-size: 1.5em;
+  }
+  .fa-power-off {
+    color: #ffc107;
+    font-size: 1.5em;
+  }
+
+  .exercises-container{
+    height:400px;
+    overflow: auto;
+  }
+
+  trem {
+    //md-toolbar {
+    //  button {
+    //    min-width: 30px !important;
+    //    font-size: 24px !important;
+    //  }
+    //}
+
+    .player {
+
+      ng-transclude {
+        flex: 1;
+        text-align: center;
+      }
+      i {
+        flex: 1;
+        text-align: center;
+      }
+      #text {
+        flex: 4;
+        text-align: center;
+        padding-left: 15px;
+      }
+      .post {
+        flex: 3;
+        text-align: center;
+      }
+    }
+    .fa-search-plus {
+      font-size: 1.5em;
+      padding: 3px 2px 3px 2px;
+    }
+    .ng-scope .condition {
+      //border-left: 1px solid #ccc;
+      padding-left : 5px;
+    }
+    #post {
+      //margin-left:2em;
+    }
+
+    .panel-more {
+      color: white;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .player-good ng-binding {
+      color: #00C703;
+    }
+    .player-hurt ng-binding {
+      color: #D81300;
+    }
+    .player-tired ng-binding {
+      color: #d86900;
+    }
+
+    .noPad {
+      padding: 0 0 10px 0;
+      margin: 10px 0 0 0;
+    }
+    .teamView{
+      width:100%;
+    }
+    team-view {
+
+      .columnF {
+        justify-content: space-around;
+      }
+      .soccer{
+        z-index: 0;
+        //height:100%;
+        width:100%;
+        //position: absolute;
+      }
+      .soccerFields{
+        position: absolute;
+        height:100%;
+        width:100%;
+      }
+      .post {
+        overflow: hidden;
+      }
+      .disabled {
+        display: none;
+      }
+      .playerPost{
+        width: 100%;
+        height: 100%;
+        z-index: 3;
+        position: relative;
+        .closePost{
+          float: right;
+        }
+        .fa-plus-circle {
+          color: #02bbc7;
+          font-size: 5em;
+        }
+        .pos {
+          text-align: center;
+        }
+
+        .player{
+          border-bottom: 1px solid #cccccc;
+        }
+
+        .list{
+          //width : 133px;
+          //height: 100px;
+          background-color: #FFF;
+
+          overflow-y: scroll;
+        }
+
+        .playerDetail{
+         // width : 133px;
+         // height: 100px;
+          #playerAvatar {
+            font-size:3em;
+            color:FFF;
+            text-align: center;
+          }
+
+          #playerInfo{
+            display: flex;
+            border-radius: 10px 2px 10px 2px;
+            -moz-border-radius: 10px 2px 10px 2px;
+            -webkit-border-radius: 10px 2px 10px 2px;
+            border: 1px solid #FFF;
+            background-color: #FFF;
+            #name{
+              flex-grow:2;
+              text-align: center;
+            }
+            #post{
+              text-align: center;
+              flex-grow:1;
+              margin-left:3px;
+              border-right : 1px solid #ccc
+            }
+            #condition{
+              flex-grow:1;
+              margin-rigth:3px;
+            }
+          }
+        }
+        .playerList{
+          height:15em;
+        }
+        player-row{
+          .player:hover{
+            background-color: rgba(0, 226, 30, 0.16);
+          }
+          .condition {
+            padding-right: 10px;
+          }
+          #text{
+            flex:8 !important;
+            padding-left: 0 !important;
+          }
+        }
+      }
+    }
+
+    team-creat {
+      player-post {
+        .icon {
+          font-size: 3em;
+        }
+
+      }
+    }
+
+    .player-list {
+
+      .row-wait {
+        md-select {
+          color: lightsalmon !important;
+        }
+      }
+
+      .row-wont {
+        md-select {
+          color: lightcoral !important;
+        }
+      }
+
+      .row-will {
+        md-select {
+          color: #09ab09 !important;
+        }
+      }
+
+    }
+
+
+
+    .player-view-header-text {
+      color: black;
+    }
+
+    navig + .container-fluid {
+      padding: 8px;
+      top: 50px;
+      background-color: #eee;
+    }
+
+    select-team {
+      md-grid-tile {
+        background-color: #b9f6ca;
+      }
+
+      .equipeList{
+        .badge{
+          margin-left: 5px;
+        }
+      }
+      h1{
+        text-align:center;
+      }
+      ul{
+        list-style: none;
+      }
+      #createTeam{
+        width: 25%;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+      .equipeList{
+        list-style: none;
+        display: flex;
+
+        li {
+          margin-right: 5vw;
+          &:nth-child(odd){
+
+          }
+          a {
+
+            padding-left: 8px;
+
+            &:hover {
+              text-decoration: none;
+
+              background-color: darken(#204d74,1%);
+            }
+
+            &:visited {
+              text-decoration: none;
+            }
+
+            &:active {
+              box-shadow: inset 0px 0px 8px black;
+            }
+          }
+        }
+      }
+    }
+  }
+}

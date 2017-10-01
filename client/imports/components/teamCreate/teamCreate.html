@@ -1,0 +1,16 @@
+<md-toolbar layout="row" class="md-toolbar-tools">
+    <h1>Créer une équipe</h1>
+</md-toolbar>
+
+<md-content flex layout="row" layout-padding layout-wrap>
+    <div class="form-group">
+        <label for="name">Nom</label>
+        <md-input ng-Model="teamCreate.team.name" type="text" placeholder="Nom" class="form-control" id="name">
+    </div>
+    <div class="form-group">
+        <label for="Tag">Diminutif</label>
+        <md-input ng-Model="teamCreate.team._id" type="text" class="form-control" id="Tag">
+    </div>
+
+    <md-button ng-click="teamCreate.addTeam(teamCreate.team)"><i class="fa fa-plus"></i> Créer</md-button>
+</md-content>

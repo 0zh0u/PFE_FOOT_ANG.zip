@@ -1,0 +1,75 @@
+<div flex layout="column">
+    <md-toolbar layout="row" class="md-toolbar-tools">
+        <md-button ng-hide="stats.$mdMedia('gt-md')" ng-click="menuOpened = !menuOpened" class="md-icon-button"><i class="fa fa-2x fa-bars"
+                                                                                 aria-hidden="true"></i>
+        </md-button>
+        <h1>Evénements à venir - {{stats.team.name}}</h1>
+    </md-toolbar>
+
+    <div flex layout="row">
+        <navig layout="column" lock-open="lockOpen" current-team="stats.team" menu-opened="menuOpened"></navig>
+
+        <md-content flex layout="column" layout-padding md-scroll-y>
+            <md-content flex layout="row">
+                <div flex="40">
+                    <h1>Statistiques par joueurs</h1>
+                    <canvas id="bar" class="chart chart-bar"
+                            chart-data="stats.filteredData" chart-labels="stats.filteredLabels" chart-series="stats.playersSeries" chart-options="{
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+    }">
+                    </canvas>
+                </div>
+                <div flex="40" style="max-height: 400px; overflow: auto;">
+                    <select-players ng-change="stats.selectedPlayersChange" ng-model="stats.filterPlayers" team="stats.team"></select-players>
+                </div>
+                <div flex="20">
+                    <h1>Statistiques de l'équipe</h1>
+                    <canvas id="pie" class="chart chart-pie"
+                            chart-data="stats.teamData" chart-labels="stats.teamLabels">
+                    </canvas>
+                </div>
+            </md-content>
+
+            <md-content flex layout="row">
+                <div flex layout="column">
+                    <h1>
+                        Statistiques des matchs
+                    </h1>
+                    <md-content flex layout="row" layout-padding md-scroll-y>
+                        <canvas id="line" flex="50" class="chart chart-line" chart-data="stats.match.data" chart-labels="stats.match.labels"
+                                chart-options="stats.match.options" chart-legend="true" chart-series="stats.match.series" chart-click="stats.onClick">
+
+                        </canvas>
+
+                        <canvas id="line2" flex="50" class="chart chart-bar" chart-data="stats.match.data" chart-labels="stats.match.labels" chart-options="stats.match.options"
+                                chart-legend="true" chart-series="stats.match.series" chart-click="stats.onClick">
+
+                        </canvas>
+                    </md-content>
+
+                </div>
+                <div flex layout="column" >
+                    <h1>
+                        Statistiques des entrainements
+                    </h1>
+                    <md-content flex layout="row" layout-padding md-scroll-y>
+                        <canvas flex="50" id="training1" class="chart chart-doughnut" chart-options="stats.training1.options"
+                                chart-dataset-override="stats.training1.datasetOverride" chart-colors="stats.training1.colors" chart-data="stats.training1.data" chart-labels="stats.training1.labels">
+                        </canvas>
+                        <canvas flex="50" id="training2" class="chart chart-doughnut" chart-options="stats.training2.options"
+                                chart-dataset-override="stats.training2.datasetOverride" chart-colors="stats.training2.colors" chart-data="stats.training2.data" chart-labels="stats.training2.labels">
+                        </canvas>
+                    </md-content>
+
+
+                </div>
+            </md-content>
+        </md-content>
+    </div>
+</div>
